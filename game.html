@@ -261,15 +261,17 @@
                 .then((loadedQuestions) => {
                     questions = loadedQuestions.results.map((loadedQuestion) => {
                         const formattedQuestion = {
-                            question: loadedQuestion.question,
+                            question: loadedQuestion.question + loadedQuestion.codeSnippet, 
                         };
+                        console.log(loadedQuestion.correct_answer);
+                        console.log(formattedQuestion);
 
-                        const answerChoices = [...loadedQuestion.incorrect_answers];
-                        formattedQuestion.answer = Math.floor(Math.random() * 4) + 1;
+                        const answerChoices = [...loadedQuestion.answerOptions];
+                        formattedQuestion.answer = Math.floor(Math.random() * 3) + 1;
                         answerChoices.splice(
                             formattedQuestion.answer - 1,
                             0,
-                            loadedQuestion.correct_answer
+                            loadedQuestion.answerOptions
                         );
 
                         answerChoices.forEach((choice, index) => {
@@ -277,12 +279,11 @@
                         });
 
                         return formattedQuestion;
+                        
                     });
                     startGame();
-                })
-                .catch((err) => {
-                    console.error(err);
                 });
+               
 
             //CONSTANTS
             const CORRECT_BONUS = 10;
